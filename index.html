@@ -1,122 +1,802 @@
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Catálogo | ZM Pratas</title>
-<meta name="description" content="Descubra a seleção de joias e acessórios da ZM Pratas.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-:root{--blue:#073d87;--blue2:#0753b7;--blue3:#0b64d8;--ink:#17345b;--muted:#667891;--line:#dce6f5;--pale:#f5f8fd;--white:#fff;--silver:#cbd5e1}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fff;color:var(--ink);font-family:Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
-.wrap{width:min(1180px,calc(100% - 48px));margin-inline:auto}
-.top{background:linear-gradient(110deg,#063779,#0752ad 68%,#06418f);color:#fff;border-bottom:1px solid rgba(255,255,255,.22);box-shadow:0 5px 18px #082f6520}
-.nav{min-height:92px;display:flex;align-items:center;gap:30px}
-.brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;flex-shrink:0}
-.brandmark{font:600 43px/.78 'Cormorant Garamond',serif;letter-spacing:-.09em;border-right:1px solid #ffffff60;padding-right:13px}
-.brandtext{font-size:10px;letter-spacing:.42em;text-transform:uppercase;margin-top:8px}
-.navlinks{display:flex;align-items:center;gap:30px;margin-left:38px}
-.navlinks a{font-size:13px;color:#e9f2ff;text-decoration:none;padding:12px 0;border-bottom:2px solid transparent;transition:.2s}
-.navlinks a:hover,.navlinks a.active{color:white;border-color:#fff}
-.navsearch{margin-left:auto;display:flex;align-items:center;gap:10px;border:1px solid #ffffff75;border-radius:30px;padding:11px 16px;width:min(300px,30vw);background:#ffffff0c}
-.navsearch svg{width:18px;flex-shrink:0}.navsearch input{width:100%;min-width:0;background:transparent;border:0;outline:0;color:#fff;font:12px Inter}.navsearch input::placeholder{color:#d9e7ff}
-.tagline{font:500 13px 'Cormorant Garamond',serif;white-space:nowrap;color:#eaf2ff;letter-spacing:.04em}
-.hero{background:linear-gradient(105deg,#082e65 0%,#073b82 58%,#062e68 100%);color:white;overflow:hidden}
-.hero-inner{width:100%;max-width:none;margin:0;min-height:270px;display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);align-items:stretch}
-.hero-photo{position:relative;min-width:0;min-height:270px;background:#0b438e;overflow:hidden}
-.hero-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,49,107,0) 48%,rgba(7,49,107,.35) 72%,#073779 100%)}
-.hero-photo img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:center 52%}
-.hero-copy{min-width:0;padding:34px clamp(24px,4.5vw,68px);align-self:center;position:relative}
-.hero-copy:after{content:"✦";position:absolute;right:7%;top:10%;font-size:44px;color:#b9d6ff75;font-weight:400}
-.eyebrow{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#a9cfff;font-weight:600}
-h1{font:500 clamp(38px,4.4vw,58px)/.91 'Cormorant Garamond',serif;letter-spacing:-.025em;margin:15px 0 14px;color:#fff}
-.hero-copy p{font-size:13px;line-height:1.75;color:#e1edff;max-width:440px;margin:0}
-.hero-rule{width:120px;height:1px;background:#a9cfff;margin-top:23px}
-.catalog{padding-top:24px}
-.toolbar{display:flex;align-items:center;gap:18px;margin-bottom:25px}
-.search-main{height:46px;display:flex;align-items:center;gap:12px;border:1px solid #d7e5fa;border-radius:30px;padding:0 17px;flex:1;max-width:650px;background:#fff;box-shadow:0 3px 12px #0a43890a}
-.search-main svg{width:19px;color:var(--blue2);flex-shrink:0}.search-main input{border:0;outline:0;width:100%;font:12px Inter;color:var(--ink);background:transparent}.search-main input::placeholder{color:#7589a5}
-.filter-wrap{position:relative}.filter{height:42px;min-width:220px;padding:0 14px;border:1px solid #d7e5fa;border-radius:9px;background:white;color:#28548c;font:12px Inter;display:flex;align-items:center;gap:10px;cursor:pointer}.filter svg{width:17px}.filter .chevron{margin-left:auto;width:14px}
-.count{font-size:12px;color:var(--blue3);font-weight:700;white-space:nowrap;margin-left:auto}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px 22px;padding-bottom:64px}
-.card{min-width:0;background:#fff;border:1px solid #dce6f5;border-radius:9px;overflow:hidden;transition:transform .22s,box-shadow .22s,border-color .22s}
-.card:hover{transform:translateY(-4px);box-shadow:0 12px 28px #073d8718;border-color:#b7d0f5}
-.photo{aspect-ratio:1.05/1;background:linear-gradient(145deg,#f1f3f6,#e6ebf1);position:relative;display:grid;place-items:center;overflow:hidden}
-.photo img{width:100%;height:100%;object-fit:cover;transition:transform .4s}.card:hover .photo img{transform:scale(1.04)}
-.placeholder{font:600 36px 'Cormorant Garamond',serif;color:#9aaec8}
-.info{padding:13px 15px 16px}.cat{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#2766b5;margin-bottom:7px;font-weight:700}
-.name{font:600 19px/1.15 'Cormorant Garamond',serif;color:#18365f;margin:0 0 10px;min-height:22px}
-.price{font-size:15px;font-weight:700;color:#0758c5}
-.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:55px 20px;background:#f8fbff;border:1px solid var(--line);border-radius:10px}
-.loading{color:var(--muted);padding:45px 0;text-align:center}
-.benefits{border-top:1px solid #e0e8f4;background:#f7faff;padding:22px 0}
-.benefit-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.benefit{display:flex;align-items:center;justify-content:center;gap:12px;color:#476384;font-size:11px}
-.benefit svg{width:23px;height:23px;color:#2364b5;stroke-width:1.5}
-footer{background:linear-gradient(110deg,#063779,#0752ad 68%,#06418f);color:#e8f2ff}
-.footer-inner{min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:22px}
-.footer-brand{font:600 35px/.8 'Cormorant Garamond',serif;letter-spacing:-.07em;color:white}
-.footer-brand span{display:block;font:9px Inter;letter-spacing:.45em;margin-top:8px}
-.footer-note{font-size:10px;color:#c7dcfa;letter-spacing:.05em}
-@media(max-width:1000px){.nav{gap:18px}.navlinks{margin-left:8px;gap:18px}.tagline{display:none}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-inner{grid-template-columns:minmax(0,42%) minmax(0,58%)}.hero-copy{padding:28px 28px}.hero-copy h1{font-size:clamp(38px,5vw,52px)}}
-@media(max-width:700px){.wrap{width:calc(100% - 30px)}.nav{min-height:76px;flex-wrap:wrap;padding:14px 0;gap:14px}.brandmark{font-size:37px}.navlinks{order:3;width:100%;margin:0;justify-content:center;gap:30px}.navlinks a{font-size:12px;padding:4px 0 8px}.navsearch{width:auto;flex:1;max-width:240px;padding:10px 12px}.hero-inner{grid-template-columns:1fr}.hero-photo{min-height:180px;height:180px}.hero-photo:after{background:linear-gradient(0deg,#073779 0%,rgba(7,55,121,.08) 68%,transparent 100%)}.hero-copy{padding:24px 22px 30px}.hero-copy:after{right:7%;top:18%;font-size:32px}h1{font-size:43px;margin:12px 0}.hero-copy p{font-size:12px}.hero-rule{margin-top:17px}.catalog{padding-top:18px}.toolbar{flex-wrap:wrap;gap:10px;margin-bottom:18px}.search-main{max-width:none;flex-basis:100%;height:44px}.filter{min-width:0;height:38px}.count{margin-left:auto}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding-bottom:38px}.photo{aspect-ratio:1/1}.info{padding:11px}.name{font-size:18px;margin-bottom:8px}.price{font-size:14px}.cat{font-size:8px}.benefit-row{gap:8px}.benefit{flex-direction:column;text-align:center;font-size:9px;gap:6px}.footer-inner{padding:19px 0;min-height:0;flex-wrap:wrap;justify-content:center;text-align:center}.footer-note{width:100%;line-height:1.6}}
-@media(max-width:390px){.navlinks{gap:22px}.navlinks a{font-size:11px}.brandmark{font-size:33px}.navsearch{max-width:160px}.name{font-size:17px}}
-</style></head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Catálogo | ZM Pratas</title>
+    <meta name="description" content="Descubra a seleção de joias e acessórios da ZM Pratas.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <style>
+        :root {
+            --blue: #073d87;
+            --blue2: #0753b7;
+            --blue3: #0b64d8;
+            --ink: #17345b;
+            --muted: #667891;
+            --line: #dce6f5;
+            --pale: #f5f8fd;
+            --white: #fff;
+            --silver: #cbd5e1
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            background: #fff;
+            color: var(--ink);
+            font-family: Inter, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased
+        }
+
+        .wrap {
+            width: min(1180px, calc(100% - 48px));
+            margin-inline: auto
+        }
+
+        .top {
+            background: linear-gradient(110deg, #063779, #0752ad 68%, #06418f);
+            color: #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, .22);
+            box-shadow: 0 5px 18px #082f6520
+        }
+
+        .nav {
+            min-height: 92px;
+            display: flex;
+            align-items: center;
+            gap: 30px
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+            text-decoration: none;
+            flex-shrink: 0
+        }
+
+        .brandmark {
+            font: 600 43px/.78 'Cormorant Garamond', serif;
+            letter-spacing: -.09em;
+            border-right: 1px solid #ffffff60;
+            padding-right: 13px
+        }
+
+        .brandtext {
+            font-size: 10px;
+            letter-spacing: .42em;
+            text-transform: uppercase;
+            margin-top: 8px
+        }
+
+        .navlinks {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-left: 38px
+        }
+
+        .navlinks a {
+            font-size: 13px;
+            color: #e9f2ff;
+            text-decoration: none;
+            padding: 12px 0;
+            border-bottom: 2px solid transparent;
+            transition: .2s
+        }
+
+        .navlinks a:hover,
+        .navlinks a.active {
+            color: white;
+            border-color: #fff
+        }
+
+        .navsearch {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid #ffffff75;
+            border-radius: 30px;
+            padding: 11px 16px;
+            width: min(300px, 30vw);
+            background: #ffffff0c
+        }
+
+        .navsearch svg {
+            width: 18px;
+            flex-shrink: 0
+        }
+
+        .navsearch input {
+            width: 100%;
+            min-width: 0;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            color: #fff;
+            font: 12px Inter
+        }
+
+        .navsearch input::placeholder {
+            color: #d9e7ff
+        }
+
+        .tagline {
+            font: 500 13px 'Cormorant Garamond', serif;
+            white-space: nowrap;
+            color: #eaf2ff;
+            letter-spacing: .04em
+        }
+
+        .hero {
+            background: linear-gradient(105deg, #082e65 0%, #073b82 58%, #062e68 100%);
+            color: white;
+            overflow: hidden
+        }
+
+        .hero-inner {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            min-height: 270px;
+            display: grid;
+            grid-template-columns: minmax(0, 44%) minmax(0, 56%);
+            align-items: stretch
+        }
+
+        .hero-photo {
+            position: relative;
+            min-width: 0;
+            min-height: 270px;
+            background: #0b438e;
+            overflow: hidden
+        }
+
+        .hero-photo:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(7, 49, 107, 0) 48%, rgba(7, 49, 107, .35) 72%, #073779 100%)
+        }
+
+        .hero-photo img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            inset: 0;
+            object-fit: cover;
+            object-position: center 52%
+        }
+
+        .hero-copy {
+            min-width: 0;
+            padding: 34px clamp(24px, 4.5vw, 68px);
+            align-self: center;
+            position: relative
+        }
+
+        .hero-copy:after {
+            content: "✦";
+            position: absolute;
+            right: 7%;
+            top: 10%;
+            font-size: 44px;
+            color: #b9d6ff75;
+            font-weight: 400
+        }
+
+        .eyebrow {
+            font-size: 10px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: #a9cfff;
+            font-weight: 600
+        }
+
+        h1 {
+            font: 500 clamp(38px, 4.4vw, 58px)/.91 'Cormorant Garamond', serif;
+            letter-spacing: -.025em;
+            margin: 15px 0 14px;
+            color: #fff
+        }
+
+        .hero-copy p {
+            font-size: 13px;
+            line-height: 1.75;
+            color: #e1edff;
+            max-width: 440px;
+            margin: 0
+        }
+
+        .hero-rule {
+            width: 120px;
+            height: 1px;
+            background: #a9cfff;
+            margin-top: 23px
+        }
+
+        .catalog {
+            padding-top: 24px
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 25px
+        }
+
+        .search-main {
+            height: 46px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #d7e5fa;
+            border-radius: 30px;
+            padding: 0 17px;
+            flex: 1;
+            max-width: 650px;
+            background: #fff;
+            box-shadow: 0 3px 12px #0a43890a
+        }
+
+        .search-main svg {
+            width: 19px;
+            color: var(--blue2);
+            flex-shrink: 0
+        }
+
+        .search-main input {
+            border: 0;
+            outline: 0;
+            width: 100%;
+            font: 12px Inter;
+            color: var(--ink);
+            background: transparent
+        }
+
+        .search-main input::placeholder {
+            color: #7589a5
+        }
+
+        .filter-wrap {
+            position: relative
+        }
+
+        .filter {
+            height: 42px;
+            min-width: 220px;
+            padding: 0 14px;
+            border: 1px solid #d7e5fa;
+            border-radius: 9px;
+            background: white;
+            color: #28548c;
+            font: 12px Inter;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer
+        }
+
+        .filter svg {
+            width: 17px
+        }
+
+        .filter .chevron {
+            margin-left: auto;
+            width: 14px
+        }
+
+        .count {
+            font-size: 12px;
+            color: var(--blue3);
+            font-weight: 700;
+            white-space: nowrap;
+            margin-left: auto
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 20px 22px;
+            padding-bottom: 64px
+        }
+
+        .card {
+            min-width: 0;
+            background: #fff;
+            border: 1px solid #dce6f5;
+            border-radius: 9px;
+            overflow: hidden;
+            transition: transform .22s, box-shadow .22s, border-color .22s
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px #073d8718;
+            border-color: #b7d0f5
+        }
+
+        .photo {
+            aspect-ratio: 1.05/1;
+            background: linear-gradient(145deg, #f1f3f6, #e6ebf1);
+            position: relative;
+            display: grid;
+            place-items: center;
+            overflow: hidden
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .4s
+        }
+
+        .card:hover .photo img {
+            transform: scale(1.04)
+        }
+
+        .placeholder {
+            font: 600 36px 'Cormorant Garamond', serif;
+            color: #9aaec8
+        }
+
+        .info {
+            padding: 13px 15px 16px
+        }
+
+        .cat {
+            font-size: 9px;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+            color: #2766b5;
+            margin-bottom: 7px;
+            font-weight: 700
+        }
+
+        .name {
+            font: 600 19px/1.15 'Cormorant Garamond', serif;
+            color: #18365f;
+            margin: 0 0 10px;
+            min-height: 22px
+        }
+
+        .price {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0758c5
+        }
+
+        .empty {
+            grid-column: 1/-1;
+            text-align: center;
+            color: var(--muted);
+            padding: 55px 20px;
+            background: #f8fbff;
+            border: 1px solid var(--line);
+            border-radius: 10px
+        }
+
+        .loading {
+            color: var(--muted);
+            padding: 45px 0;
+            text-align: center
+        }
+
+        .benefits {
+            border-top: 1px solid #e0e8f4;
+            background: #f7faff;
+            padding: 22px 0
+        }
+
+        .benefit-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px
+        }
+
+        .benefit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: #476384;
+            font-size: 11px
+        }
+
+        .benefit svg {
+            width: 23px;
+            height: 23px;
+            color: #2364b5;
+            stroke-width: 1.5
+        }
+
+        footer {
+            background: linear-gradient(110deg, #063779, #0752ad 68%, #06418f);
+            color: #e8f2ff
+        }
+
+        .footer-inner {
+            min-height: 88px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px
+        }
+
+        .footer-brand {
+            font: 600 35px/.8 'Cormorant Garamond', serif;
+            letter-spacing: -.07em;
+            color: white
+        }
+
+        .footer-brand span {
+            display: block;
+            font: 9px Inter;
+            letter-spacing: .45em;
+            margin-top: 8px
+        }
+
+        .footer-note {
+            font-size: 10px;
+            color: #c7dcfa;
+            letter-spacing: .05em
+        }
+
+        @media(max-width:1000px) {
+            .nav {
+                gap: 18px
+            }
+
+            .navlinks {
+                margin-left: 8px;
+                gap: 18px
+            }
+
+            .tagline {
+                display: none
+            }
+
+            .grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr))
+            }
+
+            .hero-inner {
+                grid-template-columns: minmax(0, 42%) minmax(0, 58%)
+            }
+
+            .hero-copy {
+                padding: 28px 28px
+            }
+
+            .hero-copy h1 {
+                font-size: clamp(38px, 5vw, 52px)
+            }
+        }
+
+        @media(max-width:700px) {
+            .wrap {
+                width: calc(100% - 30px)
+            }
+
+            .nav {
+                min-height: 76px;
+                flex-wrap: wrap;
+                padding: 14px 0;
+                gap: 14px
+            }
+
+            .brandmark {
+                font-size: 37px
+            }
+
+            .navlinks {
+                order: 3;
+                width: 100%;
+                margin: 0;
+                justify-content: center;
+                gap: 30px
+            }
+
+            .navlinks a {
+                font-size: 12px;
+                padding: 4px 0 8px
+            }
+
+            .navsearch {
+                width: auto;
+                flex: 1;
+                max-width: 240px;
+                padding: 10px 12px
+            }
+
+            .hero-inner {
+                grid-template-columns: 1fr
+            }
+
+            .hero-photo {
+                min-height: 180px;
+                height: 180px
+            }
+
+            .hero-photo:after {
+                background: linear-gradient(0deg, #073779 0%, rgba(7, 55, 121, .08) 68%, transparent 100%)
+            }
+
+            .hero-copy {
+                padding: 24px 22px 30px
+            }
+
+            .hero-copy:after {
+                right: 7%;
+                top: 18%;
+                font-size: 32px
+            }
+
+            h1 {
+                font-size: 43px;
+                margin: 12px 0
+            }
+
+            .hero-copy p {
+                font-size: 12px
+            }
+
+            .hero-rule {
+                margin-top: 17px
+            }
+
+            .catalog {
+                padding-top: 18px
+            }
+
+            .toolbar {
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 18px
+            }
+
+            .search-main {
+                max-width: none;
+                flex-basis: 100%;
+                height: 44px
+            }
+
+            .filter {
+                min-width: 0;
+                height: 38px
+            }
+
+            .count {
+                margin-left: auto
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+                padding-bottom: 38px
+            }
+
+            .photo {
+                aspect-ratio: 1/1
+            }
+
+            .info {
+                padding: 11px
+            }
+
+            .name {
+                font-size: 18px;
+                margin-bottom: 8px
+            }
+
+            .price {
+                font-size: 14px
+            }
+
+            .cat {
+                font-size: 8px
+            }
+
+            .benefit-row {
+                gap: 8px
+            }
+
+            .benefit {
+                flex-direction: column;
+                text-align: center;
+                font-size: 9px;
+                gap: 6px
+            }
+
+            .footer-inner {
+                padding: 19px 0;
+                min-height: 0;
+                flex-wrap: wrap;
+                justify-content: center;
+                text-align: center
+            }
+
+            .footer-note {
+                width: 100%;
+                line-height: 1.6
+            }
+        }
+
+        @media(max-width:390px) {
+            .navlinks {
+                gap: 22px
+            }
+
+            .navlinks a {
+                font-size: 11px
+            }
+
+            .brandmark {
+                font-size: 33px
+            }
+
+            .navsearch {
+                max-width: 160px
+            }
+
+            .name {
+                font-size: 17px
+            }
+        }
+    </style>
+</head>
+
 <body>
-<header class="top"><div class="wrap nav">
-<a class="brand" href="#" aria-label="ZM Pratas início"><div class="brandmark">ZM</div><div class="brandtext">PRATAS</div></a>
-<nav class="navlinks" aria-label="Navegação"><a href="#" class="active">Início</a><a href="#catalogo">Catálogo</a><a href="#sobre">Sobre Nós</a></nav>
-<label class="navsearch" aria-label="Buscar no catálogo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="searchTop" placeholder="Buscar produto ou categoria..."></label>
-<div class="tagline">Prata · Elegância · Atemporal</div>
-</div></header>
-<main>
-<section class="hero"><div class="hero-inner wrap">
-<div class="hero-photo"><img src="zm-pratas-banner.jpg" alt="Colar de prata com pingente em formato de coração"></div>
-<div class="hero-copy"><div class="eyebrow">Nossa seleção</div><h1>Peças que contam<br>uma história.</h1><p>Explore o catálogo da ZM Pratas e descubra peças escolhidas para acompanhar seus momentos especiais.</p><div class="hero-rule"></div></div>
-</div></section>
-<section class="wrap catalog" id="catalogo">
-<div class="toolbar">
-<label class="search-main"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="search" placeholder="Buscar produto ou categoria..." aria-label="Buscar produto ou categoria"></label>
-<div class="filter-wrap"><button class="filter" id="categoryBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M7 12h10M10 18h4"/><circle cx="8" cy="6" r="2" fill="white"/><circle cx="15" cy="12" r="2" fill="white"/></svg><span id="categoryLabel">Todas as categorias</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 9 6 6 6-6"/></svg></button><select id="category" aria-label="Filtrar por categoria" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer"><option value="">Todas as categorias</option></select></div>
-<div class="count" id="count">Carregando catálogo…</div>
-</div>
-<div class="grid" id="grid"><div class="loading">Preparando o catálogo…</div></div>
-</section>
-<section class="benefits" id="sobre"><div class="wrap benefit-row">
-<div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3 20 6v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="m8 12 2.5 2.5L16 9"/></svg><span>Compra segura</span></div>
-<div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h11v11H3zM14 11h4l3 3v4h-7z"/><circle cx="7" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg><span>Atendimento com carinho</span></div>
-<div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m12 3 8 4-8 14L4 7zM4 7h16M8 7l4 14 4-14"/></svg><span>Prata · Elegância · Atemporal</span></div>
-</div></section>
-</main>
-<footer><div class="wrap footer-inner"><div class="footer-brand">ZM<span>PRATAS</span></div><div class="footer-note">ZM PRATAS · CATÁLOGO DE PRODUTOS<br>Mais que prata, é estilo de vida.</div></div></footer>
-<script>
-const SUPABASE_URL='https://ocdvclfiedycrzrycwdv.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY='sb_publishable_8WB0DubSeilJrMEiuEPIZA_N7ZvBJ2-';
-const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-let products=[];let selectedCategory='';
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const money=v=>Number(String(v??0).replace(',','.')) .toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-function draw(){
- const q=document.getElementById('search').value.trim().toLocaleLowerCase('pt-BR');
- const filtered=products.filter(p=>`${p.nome||''} ${p.cat||''} ${p.sku||''}`.toLocaleLowerCase('pt-BR').includes(q)&&(!selectedCategory||String(p.cat||'')===selectedCategory));
- document.getElementById('count').textContent=`${filtered.length} ${filtered.length===1?'produto':'produtos'}`;
- document.getElementById('grid').innerHTML=filtered.map(p=>{
- const image=p.imagem_url||p.foto||'';
- return `<article class="card"><div class="photo">${image?`<img loading="lazy" src="${esc(image)}" alt="${esc(p.nome)}" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=&quot;placeholder&quot;>ZM</span>'">`:'<span class="placeholder">ZM</span>'}</div><div class="info"><div class="cat">${esc(p.cat||'Coleção')}</div><h2 class="name">${esc(p.nome||'Produto')}</h2><div class="price">${money(p.preco)}</div></div></article>`;
- }).join('')||'<div class="empty">Nenhum produto encontrado. Experimente outra busca.</div>';
-}
-function syncSearch(value,source){document.getElementById('search').value=value;if(source!=='top')document.getElementById('searchTop').value=value;else document.getElementById('searchTop').value=value;draw()}
-document.getElementById('search').addEventListener('input',e=>syncSearch(e.target.value,'main'));
-document.getElementById('searchTop').addEventListener('input',e=>syncSearch(e.target.value,'top'));
-document.getElementById('category').addEventListener('change',e=>{selectedCategory=e.target.value;document.getElementById('categoryLabel').textContent=selectedCategory||'Todas as categorias';draw()});
-async function load(){
- const {data,error}=await sb.from('catalogo_publico').select('nome,sku,cat,preco,imagem_url').order('nome',{ascending:true});
- if(error){document.getElementById('count').textContent='Catálogo indisponível';document.getElementById('grid').innerHTML='<div class="empty">O catálogo está sendo configurado. Tente novamente mais tarde.</div>';console.error(error);return}
- products=data||[];
- const cats=[...new Set(products.map(p=>String(p.cat||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
- const select=document.getElementById('category');cats.forEach(cat=>{const opt=document.createElement('option');opt.value=cat;opt.textContent=cat;select.appendChild(opt)});
- draw();
-}
-load();
-</script></body></html>
+    <header class="top">
+        <div class="wrap nav">
+            <a class="brand" href="#" aria-label="ZM Pratas início">
+                <div class="brandmark">ZM</div>
+                <div class="brandtext">PRATAS</div>
+            </a>
+            <nav class="navlinks" aria-label="Navegação"><a href="#" class="active">Início</a><a
+                    href="#catalogo">Catálogo</a><a href="#sobre">Sobre Nós</a></nav>
+            <label class="navsearch" aria-label="Buscar no catálogo"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.8">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="m16 16 4 4" />
+                </svg><input id="searchTop" placeholder="Buscar produto ou categoria..."></label>
+            <div class="tagline">Prata · Elegância · Atemporal</div>
+        </div>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="hero-inner wrap">
+                <div class="hero-photo"><img src="zm-pratas-banner.jpg"
+                        alt="Colar de prata com pingente em formato de coração"></div>
+                <div class="hero-copy">
+                    <div class="eyebrow">Nossa seleção</div>
+                    <h1>Peças que contam<br>uma história.</h1>
+                    <p>Explore o catálogo da ZM Pratas e descubra peças escolhidas para acompanhar seus momentos
+                        especiais.</p>
+                    <div class="hero-rule"></div>
+                </div>
+            </div>
+        </section>
+        <section class="wrap catalog" id="catalogo">
+            <div class="toolbar">
+                <label class="search-main"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8">
+                        <circle cx="11" cy="11" r="7" />
+                        <path d="m16 16 4 4" />
+                    </svg><input id="search" placeholder="Buscar produto ou categoria..."
+                        aria-label="Buscar produto ou categoria"></label>
+                <div class="filter-wrap"><button class="filter" id="categoryBtn" type="button"><svg viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="1.7">
+                            <path d="M4 6h16M7 12h10M10 18h4" />
+                            <circle cx="8" cy="6" r="2" fill="white" />
+                            <circle cx="15" cy="12" r="2" fill="white" />
+                        </svg><span id="categoryLabel">Todas as categorias</span><svg class="chevron"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg></button><select id="category" aria-label="Filtrar por categoria"
+                        style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer">
+                        <option value="">Todas as categorias</option>
+                    </select></div>
+                <div class="count" id="count">Carregando catálogo…</div>
+            </div>
+            <div class="grid" id="grid">
+                <div class="loading">Preparando o catálogo…</div>
+            </div>
+        </section>
+        <section class="benefits" id="sobre">
+            <div class="wrap benefit-row">
+                <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 3 20 6v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z" />
+                        <path d="m8 12 2.5 2.5L16 9" />
+                    </svg><span>Compra segura</span></div>
+                <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M3 7h11v11H3zM14 11h4l3 3v4h-7z" />
+                        <circle cx="7" cy="19" r="2" />
+                        <circle cx="18" cy="19" r="2" />
+                    </svg><span>Atendimento com carinho</span></div>
+                <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="m12 3 8 4-8 14L4 7zM4 7h16M8 7l4 14 4-14" />
+                    </svg><span>Prata · Elegância · Atemporal</span></div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="wrap footer-inner">
+            <div class="footer-brand">ZM<span>PRATAS</span></div>
+            <div class="footer-note">ZM PRATAS · CATÁLOGO DE PRODUTOS<br>Mais que prata, é estilo de vida.</div>
+        </div>
+    </footer>
+    <script>
+        // O catálogo lê somente a coleção pública com campos explicitamente selecionados.
+        // Não inicialize Auth nem leia a coleção privada users/{uid}/produtos nesta página.
+        const firebaseConfig = {
+            apiKey: "AIzaSyBag8vuI8YIx2-REEWCV7d-94hhUokEopk",
+            authDomain: "zm-pratas-2026.firebaseapp.com",
+            projectId: "zm-pratas-2026",
+            storageBucket: "zm-pratas-2026.firebasestorage.app",
+            messagingSenderId: "972536896905",
+            appId: "1:972536896905:web:2e7b476f24c21fefba9558"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        let products = []; let selectedCategory = '';
+        const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+        const money = v => Number(String(v ?? 0).replace(',', '.')).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+        function draw() {
+            const q = document.getElementById('search').value.trim().toLocaleLowerCase('pt-BR');
+            const filtered = products.filter(p => `${p.nome || ''} ${p.cat || ''} ${p.sku || ''}`.toLocaleLowerCase('pt-BR').includes(q) && (!selectedCategory || String(p.cat || '') === selectedCategory));
+            document.getElementById('count').textContent = `${filtered.length} ${filtered.length === 1 ? 'produto' : 'produtos'}`;
+            document.getElementById('grid').innerHTML = filtered.map(p => {
+                const image = p.imagem_url || p.foto || '';
+                return `<article class="card"><div class="photo">${image ? `<img loading="lazy" src="${esc(image)}" alt="${esc(p.nome)}" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=&quot;placeholder&quot;>ZM</span>'">` : '<span class="placeholder">ZM</span>'}</div><div class="info"><div class="cat">${esc(p.cat || 'Coleção')}</div><h2 class="name">${esc(p.nome || 'Produto')}</h2><div class="price">${money(p.preco)}</div></div></article>`;
+            }).join('') || '<div class="empty">Nenhum produto encontrado. Experimente outra busca.</div>';
+        }
+        function syncSearch(value, source) {document.getElementById('search').value = value; if (source !== 'top') document.getElementById('searchTop').value = value; else document.getElementById('searchTop').value = value; draw()}
+        document.getElementById('search').addEventListener('input', e => syncSearch(e.target.value, 'main'));
+        document.getElementById('searchTop').addEventListener('input', e => syncSearch(e.target.value, 'top'));
+        document.getElementById('category').addEventListener('change', e => {selectedCategory = e.target.value; document.getElementById('categoryLabel').textContent = selectedCategory || 'Todas as categorias'; draw()});
+        function load() {
+            db.collection('catalogo_publico').orderBy('nome', 'asc').onSnapshot(snap => {
+                products = snap.docs.map(doc => {
+                    const d = doc.data();
+                    // Mapeia apenas os campos públicos esperados; ignora quaisquer campos extras.
+                    return {nome: d.nome || '', sku: d.sku || '', cat: d.cat || '', preco: Number(d.preco || 0), imagem_url: d.imagem_url || ''};
+                });
+                const cats = [...new Set(products.map(p => String(p.cat || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+                const select = document.getElementById('category');
+                const current = select.value;
+                select.querySelectorAll('option:not(:first-child)').forEach(o => o.remove());
+                cats.forEach(cat => {const opt = document.createElement('option'); opt.value = cat; opt.textContent = cat; select.appendChild(opt)});
+                selectedCategory = cats.includes(current) ? current : '';
+                select.value = selectedCategory;
+                document.getElementById('categoryLabel').textContent = selectedCategory || 'Todas as categorias';
+                draw();
+            }, error => {
+                document.getElementById('count').textContent = 'Catálogo indisponível';
+                document.getElementById('grid').innerHTML = '<div class="empty">Não foi possível carregar o catálogo agora. Tente novamente mais tarde.</div>';
+                console.error('Erro ao carregar catálogo público do Firebase:', error);
+            });
+        }
+        load();
+    </script>
+</body>
+
+</html>
