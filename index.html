@@ -766,7 +766,7 @@
             document.getElementById('count').textContent = `${filtered.length} ${filtered.length === 1 ? 'produto' : 'produtos'}`;
             document.getElementById('grid').innerHTML = filtered.map(p => {
                 const image = p.imagem_url || p.foto || '';
-                return `<article class="card"><div class="photo">${image ? `<img loading="lazy" src="${esc(image)}" alt="${esc(p.nome)}" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=&quot;placeholder&quot;>ZM</span>'">` : '<span class="placeholder">ZM</span>'}</div><div class="info"><div class="cat">${esc(p.cat || 'Coleção')}</div><h2 class="name">${esc(p.nome || 'Produto')}</h2><div class="price">${money(p.preco)}</div></div></article>`;
+                return `<article class="card"><div class="photo">${image ? `<img loading="lazy" src="${esc(image)}" alt="${esc(p.nome)}" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=&quot;placeholder&quot;>ZM</span>'">` : '<span class="placeholder">ZM</span>'}</div><div class="info"><div class="cat">${esc(p.cat || 'Coleção')}</div><h2 class="name">${esc(p.nome || 'Produto')}</h2></div></article>`;
             }).join('') || '<div class="empty">Nenhum produto encontrado. Experimente outra busca.</div>';
         }
         function syncSearch(value, source) {document.getElementById('search').value = value; if (source !== 'top') document.getElementById('searchTop').value = value; else document.getElementById('searchTop').value = value; draw()}
