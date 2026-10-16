@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Catálogo | ZM Pratas</title>
-    <meta name="description" content="Descubra a seleção de joias e acessórios da ZM Pratas.">
+    <title>ZM Pratas 925 | Joias que contam histórias</title>
+    <meta name="description" content="Descubra joias em prata 925 que acompanham histórias, afetos e momentos especiais.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -460,6 +460,36 @@
             letter-spacing: .05em
         }
 
+
+        .story-intro { padding: 54px 0 58px; background: #fff; }
+        .story-inner { display: grid; grid-template-columns: .85fr 1.15fr; gap: 42px; align-items: center; }
+        .story-label { color: var(--blue2); text-transform: uppercase; letter-spacing: .25em; font-size: 10px; font-weight: 700; }
+        .story-title { font: 500 clamp(29px, 3.3vw, 43px)/1.05 'Cormorant Garamond', serif; color: var(--ink); margin: 12px 0 0; }
+        .story-copy { color: #63748a; font-size: 13px; line-height: 1.9; }
+        .story-copy p { margin: 0 0 12px; }
+        .story-link { display: inline-block; margin-top: 5px; color: var(--blue2); font-size: 12px; font-weight: 700; border-bottom: 1px solid #9dbce4; padding-bottom: 5px; }
+        .category-section { padding: 42px 0 52px; background: #f5f8fd; }
+        .section-heading { text-align: center; margin-bottom: 26px; }
+        .section-heading small { color: var(--blue2); letter-spacing: .25em; text-transform: uppercase; font-size: 10px; font-weight: 700; }
+        .section-heading h2 { margin: 8px 0; font: 500 clamp(29px, 3vw, 39px)/1.05 'Cormorant Garamond', serif; }
+        .section-heading p { color: var(--muted); font-size: 12px; margin: 0; }
+        .category-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; }
+        .category-tile { height: 220px; border: 0; padding: 0; cursor: pointer; border-radius: 8px; overflow: hidden; position: relative; background: #dce6f5; text-align: left; }
+        .category-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; display: block; }
+        .category-tile:hover img { transform: scale(1.06); }
+        .category-tile:after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, #071d3be0, transparent 75%); }
+        .category-tile span { position: absolute; z-index: 1; bottom: 17px; left: 17px; color: white; font: 600 24px 'Cormorant Garamond', serif; }
+        .catalog { padding-top: 48px; }
+        .catalog-heading { margin-bottom: 22px; }
+        .catalog-heading h2 { font: 500 clamp(30px, 3vw, 40px)/1 'Cormorant Garamond', serif; margin: 0 0 8px; }
+        .catalog-heading p { margin: 0; color: var(--muted); font-size: 12px; }
+        .story-banner { margin: 20px auto 58px; min-height: 220px; padding: 35px 42px; border-radius: 9px; color: #fff; background: linear-gradient(90deg, #062b60f2, #073b82b8), url('https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1400&q=80') center/cover; display: flex; align-items: center; }
+        .story-banner div { max-width: 550px; }
+        .story-banner small { color: #b8d7ff; letter-spacing: .22em; text-transform: uppercase; font-size: 10px; }
+        .story-banner h2 { font: 500 clamp(28px, 3vw, 39px)/1.05 'Cormorant Garamond', serif; margin: 10px 0; }
+        .story-banner p { color: #e2edff; font-size: 12px; line-height: 1.8; margin: 0; }
+        @media(max-width:700px) { .story-inner { grid-template-columns: 1fr; gap: 15px; } .category-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 11px; } .category-tile { height: 175px; } .category-tile span { font-size: 21px; bottom: 13px; left: 13px; } .story-banner { padding: 27px 23px; min-height: 230px; } }
+
         @media(max-width:1000px) {
             .nav {
                 gap: 18px
@@ -665,83 +695,66 @@
 </head>
 
 <body>
-    <header class="top">
+    <header class="top" id="inicio">
         <div class="wrap nav">
-            <a class="brand" href="#" aria-label="ZM Pratas início">
-                <div class="brandmark">ZM</div>
-                <div class="brandtext">PRATAS</div>
+            <a class="brand" href="index.html" aria-label="ZM Pratas 925 início">
+                <div class="brandmark">ZM</div><div class="brandtext">PRATAS 925</div>
             </a>
-            <nav class="navlinks" aria-label="Navegação"><a href="#" class="active">Início</a><a
-                    href="#catalogo">Catálogo</a><a href="#sobre">Sobre Nós</a></nav>
-            <label class="navsearch" aria-label="Buscar no catálogo"><svg viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1.8">
-                    <circle cx="11" cy="11" r="7" />
-                    <path d="m16 16 4 4" />
-                </svg><input id="searchTop" placeholder="Buscar produto ou categoria..."></label>
-            <div class="tagline">Prata · Elegância · Atemporal</div>
+            <nav class="navlinks" aria-label="Navegação">
+                <a href="#inicio" class="active">Início</a><a href="#colecao">Coleção</a><a href="#produtos">Produtos</a><a href="sobre.html">Sobre Nós</a>
+            </nav>
+            <label class="navsearch" aria-label="Buscar no catálogo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="searchTop" placeholder="Buscar joias..."></label>
+            <div class="tagline">Prata 925 · Elegância · Afeto</div>
         </div>
     </header>
     <main>
-        <section class="hero">
-            <div class="hero-inner wrap">
-                <div class="hero-photo"><img src="zm-pratas-banner.jpg"
-                        alt="Colar de prata com pingente em formato de coração"></div>
+        <section class="hero" aria-label="Apresentação ZM Pratas 925">
+            <div class="hero-inner">
+                <div class="hero-photo"><img src="zm-pratas-banner.jpg" alt="Joias da ZM Pratas 925"></div>
                 <div class="hero-copy">
-                    <div class="eyebrow">Nossa seleção</div>
-                    <h1>Peças que contam<br>uma história.</h1>
-                    <p>Explore o catálogo da ZM Pratas e descubra peças escolhidas para acompanhar seus momentos
-                        especiais.</p>
+                    <div class="eyebrow">ZM Pratas 925 · Joias com significado</div>
+                    <h1>Há histórias que<br>merecem <em style="font-style:normal;color:#c7ddfa">brilhar.</em></h1>
+                    <p>Algumas joias marcam começos, celebram conquistas e guardam pessoas queridas por perto. Encontre uma peça que combine com a sua história — e com todos os capítulos que ainda virão.</p>
                     <div class="hero-rule"></div>
                 </div>
             </div>
         </section>
-        <section class="wrap catalog" id="catalogo">
+        <section class="story-intro">
+            <div class="wrap story-inner">
+                <div><span class="story-label">Mais do que uma joia</span><h2 class="story-title">O brilho está na peça.<br>O significado está em você.</h2></div>
+                <div class="story-copy"><p>Uma joia pode ser um presente inesperado, uma lembrança de alguém especial ou um pequeno gesto de amor-próprio. É por isso que acreditamos que escolher uma peça vai além da aparência: é encontrar algo que faça sentido para quem você é.</p><p>Na <strong>ZM Pratas 925</strong>, cada detalhe inspira delicadeza, personalidade e a beleza de transformar momentos simples em memórias para guardar.</p><a class="story-link" href="sobre.html">Conheça a nossa história&nbsp; →</a></div>
+            </div>
+        </section>
+        <section class="category-section" id="colecao">
+            <div class="wrap"><div class="section-heading"><small>Encontre o seu estilo</small><h2>Explore nossas categorias</h2><p>Da delicadeza do dia a dia aos detalhes que fazem uma ocasião especial.</p></div>
+                <div class="category-grid">
+                    <button class="category-tile" type="button" data-category="Colares"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=700&q=85" alt="Colares em prata"><span>Colares</span></button>
+                    <button class="category-tile" type="button" data-category="Brincos"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=700&q=85" alt="Brincos"><span>Brincos</span></button>
+                    <button class="category-tile" type="button" data-category="Anéis"><img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=700&q=85" alt="Anéis"><span>Anéis</span></button>
+                    <button class="category-tile" type="button" data-category="Pulseiras"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=700&q=85" alt="Pulseiras"><span>Pulseiras</span></button>
+                </div>
+            </div>
+        </section>
+        <section class="wrap catalog" id="produtos">
+            <div class="catalog-heading"><span class="eyebrow" style="color:#2766b5">A nossa seleção</span><h2>Joias para chamar de suas</h2><p>Descubra as peças disponíveis no catálogo da ZM Pratas 925.</p></div>
             <div class="toolbar">
-                <label class="search-main"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.8">
-                        <circle cx="11" cy="11" r="7" />
-                        <path d="m16 16 4 4" />
-                    </svg><input id="search" placeholder="Buscar produto ou categoria..."
-                        aria-label="Buscar produto ou categoria"></label>
-                <div class="filter-wrap"><button class="filter" id="categoryBtn" type="button"><svg viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.7">
-                            <path d="M4 6h16M7 12h10M10 18h4" />
-                            <circle cx="8" cy="6" r="2" fill="white" />
-                            <circle cx="15" cy="12" r="2" fill="white" />
-                        </svg><span id="categoryLabel">Todas as categorias</span><svg class="chevron"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <path d="m6 9 6 6 6-6" />
-                        </svg></button><select id="category" aria-label="Filtrar por categoria"
-                        style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer">
-                        <option value="">Todas as categorias</option>
-                    </select></div>
+                <label class="search-main"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="search" placeholder="Buscar produto ou categoria..." aria-label="Buscar produto ou categoria"></label>
+                <div class="filter-wrap"><button class="filter" id="categoryBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M7 12h10M10 18h4"/><circle cx="8" cy="6" r="2" fill="white"/><circle cx="15" cy="12" r="2" fill="white"/></svg><span id="categoryLabel">Todas as categorias</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 9 6 6 6-6"/></svg></button><select id="category" aria-label="Filtrar por categoria" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer"><option value="">Todas as categorias</option></select></div>
                 <div class="count" id="count">Carregando catálogo…</div>
             </div>
-            <div class="grid" id="grid">
-                <div class="loading">Preparando o catálogo…</div>
-            </div>
+            <div class="grid" id="grid"><div class="loading">Preparando o catálogo…</div></div>
+            <div class="story-banner"><div><small>ZM Pratas 925</small><h2>Uma lembrança para hoje.<br>Uma história para sempre.</h2><p>Escolha com carinho uma joia para você ou para alguém que faz parte da sua vida.</p></div></div>
         </section>
-        <section class="benefits" id="sobre">
-            <div class="wrap benefit-row">
-                <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M12 3 20 6v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z" />
-                        <path d="m8 12 2.5 2.5L16 9" />
-                    </svg><span>Compra segura</span></div>
-                <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M3 7h11v11H3zM14 11h4l3 3v4h-7z" />
-                        <circle cx="7" cy="19" r="2" />
-                        <circle cx="18" cy="19" r="2" />
-                    </svg><span>Atendimento com carinho</span></div>
-                <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="m12 3 8 4-8 14L4 7zM4 7h16M8 7l4 14 4-14" />
-                    </svg><span>Prata · Elegância · Atemporal</span></div>
-            </div>
-        </section>
+        <section class="benefits"><div class="wrap benefit-row">
+            <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3 20 6v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="m8 12 2.5 2.5L16 9"/></svg><span>Compra segura</span></div>
+            <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h11v11H3zM14 11h4l3 3v4h-7z"/><circle cx="7" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg><span>Atendimento com carinho</span></div>
+            <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m12 3 8 4-8 14L4 7zM4 7h16M8 7l4 14 4-14"/></svg><span>Prata 925 · Elegância · Atemporal</span></div>
+        </div></section>
     </main>
     <footer>
         <div class="wrap footer-inner">
-            <div class="footer-brand">ZM<span>PRATAS</span></div>
-            <div class="footer-note">ZM PRATAS · CATÁLOGO DE PRODUTOS<br>Mais que prata, é estilo de vida.</div>
+            <div class="footer-brand">ZM<span>PRATAS 925</span></div>
+            <div class="footer-note">ZM PRATAS 925 · JOIAS COM SIGNIFICADO<br>Mais do que prata, histórias para guardar.</div>
         </div>
     </footer>
     <script>
@@ -773,6 +786,13 @@
         document.getElementById('search').addEventListener('input', e => syncSearch(e.target.value, 'main'));
         document.getElementById('searchTop').addEventListener('input', e => syncSearch(e.target.value, 'top'));
         document.getElementById('category').addEventListener('change', e => {selectedCategory = e.target.value; document.getElementById('categoryLabel').textContent = selectedCategory || 'Todas as categorias'; draw()});
+        document.querySelectorAll('.category-tile').forEach(tile => tile.addEventListener('click', () => {
+            const wanted = tile.dataset.category.toLocaleLowerCase('pt-BR');
+            const found = [...document.getElementById('category').options].find(o => o.value && (o.value.toLocaleLowerCase('pt-BR').includes(wanted.slice(0,-1)) || wanted.includes(o.value.toLocaleLowerCase('pt-BR'))));
+            if (found) { selectedCategory = found.value; document.getElementById('category').value = found.value; document.getElementById('categoryLabel').textContent = found.value; }
+            else { selectedCategory = ''; document.getElementById('category').value = ''; document.getElementById('categoryLabel').textContent = tile.dataset.category; document.getElementById('search').value = tile.dataset.category; document.getElementById('searchTop').value = tile.dataset.category; }
+            document.getElementById('produtos').scrollIntoView({behavior:'smooth'}); draw();
+        }));
         function load() {
             db.collection('catalogo_publico').orderBy('nome', 'asc').onSnapshot(snap => {
                 products = snap.docs.map(doc => {
