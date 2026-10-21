@@ -490,6 +490,17 @@
         .story-banner p { color: #e2edff; font-size: 12px; line-height: 1.8; margin: 0; }
         @media(max-width:700px) { .story-inner { grid-template-columns: 1fr; gap: 15px; } .category-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 11px; } .category-tile { height: 175px; } .category-tile span { font-size: 21px; bottom: 13px; left: 13px; } .story-banner { padding: 27px 23px; min-height: 230px; } }
 
+
+        .testimonials-section { padding: 54px 0 60px; background: #f5f8fd; border-top: 1px solid #e0e8f4; }
+        .testimonial-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+        .testimonial-card { background:#fff; border:1px solid #dce6f5; border-radius:10px; padding:23px; box-shadow:0 6px 20px #073d8708; min-width:0; }
+        .testimonial-stars { color:#d5a83d; letter-spacing:.14em; font-size:15px; margin-bottom:12px; }
+        .testimonial-message { font-size:13px; line-height:1.8; color:#536983; white-space:pre-wrap; overflow-wrap:anywhere; }
+        .testimonial-person { display:flex; align-items:center; gap:12px; margin-top:18px; color:#17345b; font-weight:700; font-size:12px; }
+        .testimonial-person img { width:44px; height:44px; object-fit:cover; border-radius:50%; border:1px solid #dce6f5; }
+        .testimonial-person .initial { width:44px; height:44px; border-radius:50%; display:grid; place-items:center; background:#e8f1ff; color:#0753b7; font:600 20px 'Cormorant Garamond',serif; }
+        @media(max-width:700px) { .testimonial-grid { grid-template-columns:1fr; } .testimonials-section { padding:40px 0; } }
+
         @media(max-width:1000px) {
             .nav {
                 gap: 18px
@@ -738,6 +749,20 @@
             </div>
             <div class="grid" id="grid"><div class="loading">Preparando o catálogo…</div></div>
 </section>
+
+        <section class="testimonials-section" id="depoimentos">
+            <div class="wrap">
+                <div class="section-heading">
+                    <small>Carinho que inspira</small>
+                    <h2>O que nossas clientes dizem</h2>
+                    <p>Experiências compartilhadas por quem escolheu a ZM Pratas 925.</p>
+                </div>
+                <div class="testimonial-grid" id="testimonial-grid">
+                    <div class="empty">Carregando depoimentos...</div>
+                </div>
+            </div>
+        </section>
+
         <section class="benefits"><div class="wrap benefit-row">
             <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3 20 6v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="m8 12 2.5 2.5L16 9"/></svg><span>Compra segura</span></div>
             <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h11v11H3zM14 11h4l3 3v4h-7z"/><circle cx="7" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg><span>Atendimento com carinho</span></div>
@@ -786,6 +811,31 @@
             else { selectedCategory = ''; document.getElementById('category').value = ''; document.getElementById('categoryLabel').textContent = tile.dataset.category; document.getElementById('search').value = tile.dataset.category; document.getElementById('searchTop').value = tile.dataset.category; }
             document.getElementById('produtos').scrollIntoView({behavior:'smooth'}); draw();
         }));
+
+        function loadTestimonials() {
+            const target = document.getElementById('testimonial-grid');
+            db.collection('depoimentos_publicos').where('publicado', '==', true).onSnapshot(snap => {
+                const items = snap.docs.map(doc => ({id: doc.id, ...doc.data()}))
+                    .sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+                target.innerHTML = items.map(t => {
+                    const name = String(t.nome || 'Cliente ZM Pratas');
+                    const message = String(t.mensagem || '');
+                    const photo = String(t.fotoUrl || '');
+                    const avatar = photo
+                        ? `<img loading="lazy" src="${esc(photo)}" alt="Foto de ${esc(name)}" onerror="this.style.display='none'">`
+                        : `<span class="initial" aria-hidden="true">${esc(name.trim().charAt(0).toUpperCase() || '♡')}</span>`;
+                    return `<article class="testimonial-card">
+                        <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
+                        <div class="testimonial-message">“${esc(message)}”</div>
+                        <div class="testimonial-person">${avatar}<span>${esc(name)}</span></div>
+                    </article>`;
+                }).join('') || '<div class="empty">Em breve, compartilharemos por aqui as experiências das nossas clientes. 💙</div>';
+            }, error => {
+                console.error('Erro ao carregar depoimentos públicos:', error);
+                target.innerHTML = '<div class="empty">Os depoimentos não estão disponíveis no momento.</div>';
+            });
+        }
+
         function load() {
             db.collection('catalogo_publico').orderBy('nome', 'asc').onSnapshot(snap => {
                 products = snap.docs.map(doc => {
@@ -809,6 +859,7 @@
             });
         }
         load();
+        loadTestimonials();
     </script>
 </body>
 
