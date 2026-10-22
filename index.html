@@ -790,7 +790,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Depoimentos carregados do Supabase, na tabela existente "depoimentos".
+        // Depoimentos carregados do Supabase, na tabela existente "depoimentos". A coluna de data é criado_em.
         const SUPABASE_URL = 'https://ocdvclfiedycrzrycwdv.supabase.co';
         const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_8WB0DubSeilJrMEiuEPIZA_N7ZvBJ2-';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
@@ -825,8 +825,8 @@
             try {
                 const { data, error } = await supabaseClient
                     .from('depoimentos')
-                    .select('id, cliente_nome, mensagem, foto_url, publicado, created_at')
-                    .order('created_at', { ascending: false });
+                    .select('id, cliente_nome, mensagem, foto_url, publicado, criado_em')
+                    .order('criado_em', { ascending: false });
                 if (error) throw error;
 
                 const items = (data || []).filter(t =>
