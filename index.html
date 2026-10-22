@@ -500,6 +500,8 @@
         .testimonial-person { display:flex; align-items:center; gap:12px; margin-top:18px; color:#17345b; font-weight:700; font-size:12px; }
         .testimonial-person img { width:44px; height:44px; object-fit:cover; border-radius:50%; border:1px solid #dce6f5; }
         .testimonial-person .initial { width:44px; height:44px; border-radius:50%; display:grid; place-items:center; background:#e8f1ff; color:#0753b7; font:600 20px 'Cormorant Garamond',serif; }
+        .testimonial-attachment { display:block; width:100%; max-height:420px; object-fit:contain; object-position:left center; margin-top:14px; border:1px solid #dce6f5; border-radius:8px; background:#f8fafc; }
+        .testimonial-person .attachment-name { width:auto; height:auto; border:0; border-radius:0; background:none; color:#17345b; font-weight:700; font-size:12px; }
         @media(max-width:700px) { .testimonial-grid { grid-template-columns:1fr; } .testimonials-section { padding:40px 0; } }
 
         @media(max-width:1000px) {
@@ -836,13 +838,14 @@
                     const name = String(t.cliente_nome || 'Cliente ZM Pratas');
                     const message = String(t.mensagem || '');
                     const photo = String(t.foto_url || '');
-                    const avatar = photo
-                        ? `<img loading="lazy" src="${esc(photo)}" alt="Foto de ${esc(name)}" onerror="this.style.display='none'">`
-                        : `<span class="initial" aria-hidden="true">${esc(name.trim().charAt(0).toUpperCase() || '♡')}</span>`;
+                    const attachment = photo
+                        ? `<img class="testimonial-attachment" loading="lazy" src="${esc(photo)}" alt="Print do elogio enviado por ${esc(name)}" onerror="this.style.display='none'">`
+                        : '';
                     return `<article class="testimonial-card">
                         <div class="testimonial-stars" aria-label="Depoimento de cliente">♡ ♡ ♡</div>
-                        <div class="testimonial-message">“${esc(message)}”</div>
-                        <div class="testimonial-person">${avatar}<span>${esc(name)}</span></div>
+                        <div class="testimonial-message">${esc(message)}</div>
+                        ${attachment}
+                        <div class="testimonial-person"><span class="attachment-name">${esc(name)}</span></div>
                     </article>`;
                 }).join('') || '<div class="empty">Em breve, compartilharemos por aqui as experiências das nossas clientes. 💙</div>';
             } catch (error) {
