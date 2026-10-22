@@ -13,6 +13,7 @@
         rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --blue: #073d87;
@@ -712,7 +713,7 @@
                 <div class="brandmark">ZM</div><div class="brandtext">PRATAS 925</div>
             </a>
             <nav class="navlinks" aria-label="Navegação">
-                <a href="#inicio" class="active">Início</a><a href="#colecao">Coleção</a><a href="#produtos">Produtos</a><a href="sobre.html">Sobre Nós</a>
+                <a href="#inicio" class="active">Início</a><a href="#colecao">Coleção</a><a href="#produtos">Produtos</a><a href="#depoimentos">Depoimentos</a><a href="sobre.html">Sobre Nós</a>
             </nav>
             <label class="navsearch" aria-label="Buscar no catálogo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="searchTop" placeholder="Buscar joias..."></label>
             <div class="tagline">Prata 925 · Elegância · Afeto</div>
@@ -725,7 +726,7 @@
                 <div class="hero-copy">
                     <div class="eyebrow">ZM Pratas 925 · Joias com significado</div>
                     <h1>Há histórias que<br>merecem <em style="font-style:normal;color:#c7ddfa">brilhar.</em></h1>
-                    <p>Algumas joias marcam começos, celebram conquistas e guardam pessoas queridas por perto. Encontre uma peça que combine com a sua história — e com todos os capítulos que ainda virão.</p>
+                    <p>Joias em prata 925 para celebrar seus momentos especiais.</p>
                     <div class="hero-rule"></div>
                 </div>
             </div>
@@ -788,6 +789,12 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+
+        // Depoimentos carregados do Supabase, na tabela existente "depoimentos".
+        const SUPABASE_URL = 'https://ocdvclfiedycrzrycwdv.supabase.co';
+        const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_8WB0DubSeilJrMEiuEPIZA_N7ZvBJ2-';
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
         let products = []; let selectedCategory = '';
         const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
         const money = v => Number(String(v ?? 0).replace(',', '.')).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
@@ -812,28 +819,36 @@
             document.getElementById('produtos').scrollIntoView({behavior:'smooth'}); draw();
         }));
 
-        function loadTestimonials() {
+        async function loadTestimonials() {
             const target = document.getElementById('testimonial-grid');
-            db.collection('depoimentos_publicos').where('publicado', '==', true).onSnapshot(snap => {
-                const items = snap.docs.map(doc => ({id: doc.id, ...doc.data()}))
-                    .sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+            target.innerHTML = '<div class="empty">Carregando depoimentos...</div>';
+            try {
+                const { data, error } = await supabaseClient
+                    .from('depoimentos')
+                    .select('id, cliente_nome, mensagem, foto_url, publicado, created_at')
+                    .order('created_at', { ascending: false });
+                if (error) throw error;
+
+                const items = (data || []).filter(t =>
+                    t.publicado === undefined || t.publicado === null || t.publicado === true
+                );
                 target.innerHTML = items.map(t => {
-                    const name = String(t.nome || 'Cliente ZM Pratas');
+                    const name = String(t.cliente_nome || 'Cliente ZM Pratas');
                     const message = String(t.mensagem || '');
-                    const photo = String(t.fotoUrl || '');
+                    const photo = String(t.foto_url || '');
                     const avatar = photo
                         ? `<img loading="lazy" src="${esc(photo)}" alt="Foto de ${esc(name)}" onerror="this.style.display='none'">`
                         : `<span class="initial" aria-hidden="true">${esc(name.trim().charAt(0).toUpperCase() || '♡')}</span>`;
                     return `<article class="testimonial-card">
-                        <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
+                        <div class="testimonial-stars" aria-label="Depoimento de cliente">♡ ♡ ♡</div>
                         <div class="testimonial-message">“${esc(message)}”</div>
                         <div class="testimonial-person">${avatar}<span>${esc(name)}</span></div>
                     </article>`;
                 }).join('') || '<div class="empty">Em breve, compartilharemos por aqui as experiências das nossas clientes. 💙</div>';
-            }, error => {
-                console.error('Erro ao carregar depoimentos públicos:', error);
-                target.innerHTML = '<div class="empty">Os depoimentos não estão disponíveis no momento.</div>';
-            });
+            } catch (error) {
+                console.error('Erro ao carregar depoimentos do Supabase:', error);
+                target.innerHTML = '<div class="empty">Não foi possível carregar os depoimentos. Verifique as políticas de leitura (RLS) da tabela depoimentos no Supabase.</div>';
+            }
         }
 
         function load() {
@@ -855,7 +870,7 @@
             }, error => {
                 document.getElementById('count').textContent = 'Catálogo indisponível';
                 document.getElementById('grid').innerHTML = '<div class="empty">Não foi possível carregar o catálogo agora. Tente novamente mais tarde.</div>';
-                console.error('Erro ao carregar catálogo público do Firebase:', error);
+                console.error('Erro ao carregar catálogo público:', error);
             });
         }
         load();
