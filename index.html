@@ -13,7 +13,6 @@
         rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --blue: #073d87;
@@ -500,9 +499,22 @@
         .testimonial-person { display:flex; align-items:center; gap:12px; margin-top:18px; color:#17345b; font-weight:700; font-size:12px; }
         .testimonial-person img { width:44px; height:44px; object-fit:cover; border-radius:50%; border:1px solid #dce6f5; }
         .testimonial-person .initial { width:44px; height:44px; border-radius:50%; display:grid; place-items:center; background:#e8f1ff; color:#0753b7; font:600 20px 'Cormorant Garamond',serif; }
-        .testimonial-attachment { display:block; width:100%; max-height:420px; object-fit:contain; object-position:left center; margin-top:14px; border:1px solid #dce6f5; border-radius:8px; background:#f8fafc; }
-        .testimonial-person .attachment-name { width:auto; height:auto; border:0; border-radius:0; background:none; color:#17345b; font-weight:700; font-size:12px; }
         @media(max-width:700px) { .testimonial-grid { grid-template-columns:1fr; } .testimonials-section { padding:40px 0; } }
+
+
+        .stock-badge { display:inline-flex; margin-top:9px; padding:6px 9px; border-radius:20px; font-size:10px; font-weight:700; background:#e8f7ee; color:#187344; }
+        .stock-badge.out { background:#fff0f0; color:#b42318; }
+        .product-actions { display:flex; flex-wrap:wrap; gap:7px; margin-top:12px; }
+        .select-product, .ask-product { border:1px solid #0753b7; border-radius:7px; padding:9px 10px; font:600 11px Inter,Arial,sans-serif; cursor:pointer; }
+        .select-product { background:#0753b7; color:white; }
+        .select-product.selected { background:#e7f0ff; color:#073d87; }
+        .ask-product { background:white; color:#0753b7; }
+        .cart-bar { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; padding:14px 16px; margin:0 0 20px; border:1px solid #cbdcf5; border-radius:10px; background:#f5f8fd; }
+        .cart-bar strong { color:#073d87; font-size:13px; }
+        .cart-bar span { color:#667891; font-size:11px; }
+        .send-cart { border:0; border-radius:8px; background:#16834a; color:#fff; font:700 12px Inter,Arial,sans-serif; padding:12px 16px; cursor:pointer; }
+        .send-cart:disabled { opacity:.5; cursor:not-allowed; }
+        .product-actions button:focus-visible, .send-cart:focus-visible { outline:3px solid #9fc5ff; outline-offset:2px; }
 
         @media(max-width:1000px) {
             .nav {
@@ -715,7 +727,7 @@
                 <div class="brandmark">ZM</div><div class="brandtext">PRATAS 925</div>
             </a>
             <nav class="navlinks" aria-label="Navegação">
-                <a href="#inicio" class="active">Início</a><a href="#colecao">Coleção</a><a href="#produtos">Produtos</a><a href="#depoimentos">Depoimentos</a><a href="sobre.html">Sobre Nós</a>
+                <a href="#inicio" class="active">Início</a><a href="#colecao">Coleção</a><a href="#produtos">Produtos</a><a href="sobre.html">Sobre Nós</a>
             </nav>
             <label class="navsearch" aria-label="Buscar no catálogo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="searchTop" placeholder="Buscar joias..."></label>
             <div class="tagline">Prata 925 · Elegância · Afeto</div>
@@ -728,7 +740,7 @@
                 <div class="hero-copy">
                     <div class="eyebrow">ZM Pratas 925 · Joias com significado</div>
                     <h1>Há histórias que<br>merecem <em style="font-style:normal;color:#c7ddfa">brilhar.</em></h1>
-                    <p>Joias em prata 925 para celebrar seus momentos especiais.</p>
+                    <p>Algumas joias marcam começos, celebram conquistas e guardam pessoas queridas por perto. Encontre uma peça que combine com a sua história — e com todos os capítulos que ainda virão.</p>
                     <div class="hero-rule"></div>
                 </div>
             </div>
@@ -749,6 +761,10 @@
                 <label class="search-main"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="search" placeholder="Buscar produto ou categoria..." aria-label="Buscar produto ou categoria"></label>
                 <div class="filter-wrap"><button class="filter" id="categoryBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M7 12h10M10 18h4"/><circle cx="8" cy="6" r="2" fill="white"/><circle cx="15" cy="12" r="2" fill="white"/></svg><span id="categoryLabel">Todas as categorias</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 9 6 6 6-6"/></svg></button><select id="category" aria-label="Filtrar por categoria" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer"><option value="">Todas as categorias</option></select></div>
                 <div class="count" id="count">Carregando catálogo…</div>
+            </div>
+            <div class="cart-bar" aria-live="polite">
+                <div><strong id="selection-count">Nenhuma joia selecionada</strong><br><span>Escolha várias peças e envie sua lista pelo WhatsApp.</span></div>
+                <button class="send-cart" id="send-selection" type="button" disabled>Enviar seleção pelo WhatsApp</button>
             </div>
             <div class="grid" id="grid"><div class="loading">Preparando o catálogo…</div></div>
 </section>
@@ -791,23 +807,67 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-
-        // Depoimentos carregados do Supabase, na tabela existente "depoimentos". A coluna de data é criado_em.
-        const SUPABASE_URL = 'https://ocdvclfiedycrzrycwdv.supabase.co';
-        const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_8WB0DubSeilJrMEiuEPIZA_N7ZvBJ2-';
-        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-
         let products = []; let selectedCategory = '';
+        // Informe o WhatsApp da loja com código do país + DDD + número, somente números.
+        // Exemplo de formato: 5511999999999
+        const WHATSAPP_NUMBER = '5517991831389';
+        const selectedProducts = new Map();
+
         const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
         const money = v => Number(String(v ?? 0).replace(',', '.')).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+        function isOutOfStock(p) { return p.estoque !== null && p.estoque <= 0; }
+        function updateSelectionUI() {
+            const count = selectedProducts.size;
+            document.getElementById('selection-count').textContent = count === 0
+                ? 'Nenhuma joia selecionada'
+                : `${count} ${count === 1 ? 'joia selecionada' : 'joias selecionadas'}`;
+            document.getElementById('send-selection').disabled = count === 0;
+        }
+        function toggleProduct(p) {
+            const key = p.id || p.sku || p.nome;
+            if (selectedProducts.has(key)) selectedProducts.delete(key);
+            else selectedProducts.set(key, p);
+            updateSelectionUI();
+            draw();
+        }
+        function sendWhatsApp(items, heading) {
+            if (!/^55\d{10,11}$/.test(WHATSAPP_NUMBER)) {
+                alert('Antes de usar o WhatsApp, configure o número da ZM Pratas 925 na variável WHATSAPP_NUMBER, no código do catálogo.');
+                return;
+            }
+            const lines = items.map((p, i) => `${i + 1}. ${p.nome}${isOutOfStock(p) ? ' (ESGOTADO — consultar possibilidade de encomenda)' : ''}`);
+            const message = `${heading}\n\n${lines.join('\n')}\n\nOlá! Gostaria de saber mais sobre essas joias da ZM Pratas 925.`;
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+        }
+        document.getElementById('send-selection').addEventListener('click', () => {
+            if (selectedProducts.size) sendWhatsApp([...selectedProducts.values()], 'Olá! Tenho interesse nestas joias:');
+        });
         function draw() {
             const q = document.getElementById('search').value.trim().toLocaleLowerCase('pt-BR');
             const filtered = products.filter(p => `${p.nome || ''} ${p.cat || ''} ${p.sku || ''}`.toLocaleLowerCase('pt-BR').includes(q) && (!selectedCategory || String(p.cat || '') === selectedCategory));
             document.getElementById('count').textContent = `${filtered.length} ${filtered.length === 1 ? 'produto' : 'produtos'}`;
             document.getElementById('grid').innerHTML = filtered.map(p => {
                 const image = p.imagem_url || p.foto || '';
-                return `<article class="card"><div class="photo">${image ? `<img loading="lazy" src="${esc(image)}" alt="${esc(p.nome)}" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=&quot;placeholder&quot;>ZM</span>'">` : '<span class="placeholder">ZM</span>'}</div><div class="info"><div class="cat">${esc(p.cat || 'Coleção')}</div><h2 class="name">${esc(p.nome || 'Produto')}</h2></div></article>`;
+                const key = p.id || p.sku || p.nome;
+                const out = isOutOfStock(p);
+                const selected = selectedProducts.has(key);
+                const status = p.estoque === null
+                    ? ''
+                    : `<div class="stock-badge ${out ? 'out' : ''}">${out ? 'Esgotado · consulte encomenda' : 'Disponível'}</div>`;
+                const action = out
+                    ? `<div class="product-actions"><button class="ask-product" type="button" data-ask="${esc(key)}">Consultar encomenda no WhatsApp</button></div>`
+                    : `<div class="product-actions"><button class="select-product ${selected ? 'selected' : ''}" type="button" data-select="${esc(key)}">${selected ? '✓ Selecionada' : '＋ Selecionar joia'}</button></div>`;
+                return `<article class="card"><div class="photo">${image ? `<img loading="lazy" src="${esc(image)}" alt="${esc(p.nome)}" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=&quot;placeholder&quot;>ZM</span>'">` : '<span class="placeholder">ZM</span>'}</div><div class="info"><div class="cat">${esc(p.cat || 'Coleção')}</div><h2 class="name">${esc(p.nome || 'Produto')}</h2>${status}${action}</div></article>`;
             }).join('') || '<div class="empty">Nenhum produto encontrado. Experimente outra busca.</div>';
+            document.querySelectorAll('[data-select]').forEach(btn => btn.addEventListener('click', () => {
+                const p = filtered.find(item => String(item.id || item.sku || item.nome) === btn.dataset.select);
+                if (p) toggleProduct(p);
+            }));
+            document.querySelectorAll('[data-ask]').forEach(btn => btn.addEventListener('click', () => {
+                const p = filtered.find(item => String(item.id || item.sku || item.nome) === btn.dataset.ask);
+                if (p) sendWhatsApp([p], 'Olá! Esta joia aparece como esgotada. Gostaria de consultar se é possível encomendar:');
+            }));
+            updateSelectionUI();
         }
         function syncSearch(value, source) {document.getElementById('search').value = value; if (source !== 'top') document.getElementById('searchTop').value = value; else document.getElementById('searchTop').value = value; draw()}
         document.getElementById('search').addEventListener('input', e => syncSearch(e.target.value, 'main'));
@@ -821,37 +881,28 @@
             document.getElementById('produtos').scrollIntoView({behavior:'smooth'}); draw();
         }));
 
-        async function loadTestimonials() {
+        function loadTestimonials() {
             const target = document.getElementById('testimonial-grid');
-            target.innerHTML = '<div class="empty">Carregando depoimentos...</div>';
-            try {
-                const { data, error } = await supabaseClient
-                    .from('depoimentos')
-                    .select('id, cliente_nome, mensagem, foto_url, publicado, criado_em')
-                    .order('criado_em', { ascending: false });
-                if (error) throw error;
-
-                const items = (data || []).filter(t =>
-                    t.publicado === undefined || t.publicado === null || t.publicado === true
-                );
+            db.collection('depoimentos_publicos').where('publicado', '==', true).onSnapshot(snap => {
+                const items = snap.docs.map(doc => ({id: doc.id, ...doc.data()}))
+                    .sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
                 target.innerHTML = items.map(t => {
-                    const name = String(t.cliente_nome || 'Cliente ZM Pratas');
+                    const name = String(t.nome || 'Cliente ZM Pratas');
                     const message = String(t.mensagem || '');
-                    const photo = String(t.foto_url || '');
-                    const attachment = photo
-                        ? `<img class="testimonial-attachment" loading="lazy" src="${esc(photo)}" alt="Print do elogio enviado por ${esc(name)}" onerror="this.style.display='none'">`
-                        : '';
+                    const photo = String(t.fotoUrl || '');
+                    const avatar = photo
+                        ? `<img loading="lazy" src="${esc(photo)}" alt="Foto de ${esc(name)}" onerror="this.style.display='none'">`
+                        : `<span class="initial" aria-hidden="true">${esc(name.trim().charAt(0).toUpperCase() || '♡')}</span>`;
                     return `<article class="testimonial-card">
-                        <div class="testimonial-stars" aria-label="Depoimento de cliente">♡ ♡ ♡</div>
-                        <div class="testimonial-message">${esc(message)}</div>
-                        ${attachment}
-                        <div class="testimonial-person"><span class="attachment-name">${esc(name)}</span></div>
+                        <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
+                        <div class="testimonial-message">“${esc(message)}”</div>
+                        <div class="testimonial-person">${avatar}<span>${esc(name)}</span></div>
                     </article>`;
                 }).join('') || '<div class="empty">Em breve, compartilharemos por aqui as experiências das nossas clientes. 💙</div>';
-            } catch (error) {
-                console.error('Erro ao carregar depoimentos do Supabase:', error);
-                target.innerHTML = '<div class="empty">Não foi possível carregar os depoimentos. Verifique as políticas de leitura (RLS) da tabela depoimentos no Supabase.</div>';
-            }
+            }, error => {
+                console.error('Erro ao carregar depoimentos públicos:', error);
+                target.innerHTML = '<div class="empty">Os depoimentos não estão disponíveis no momento.</div>';
+            });
         }
 
         function load() {
@@ -859,7 +910,9 @@
                 products = snap.docs.map(doc => {
                     const d = doc.data();
                     // Mapeia apenas os campos públicos esperados; ignora quaisquer campos extras.
-                    return {nome: d.nome || '', sku: d.sku || '', cat: d.cat || '', preco: Number(d.preco || 0), imagem_url: d.imagem_url || ''};
+                    const rawStock = d.estoque ?? d.quantidade ?? d.stock ?? null;
+                    const stock = rawStock === null || rawStock === '' ? null : Number(rawStock);
+                    return {id: doc.id, nome: d.nome || '', sku: d.sku || '', cat: d.cat || '', preco: Number(d.preco || 0), imagem_url: d.imagem_url || d.foto || '', estoque: Number.isFinite(stock) ? stock : null};
                 });
                 const cats = [...new Set(products.map(p => String(p.cat || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
                 const select = document.getElementById('category');
@@ -873,7 +926,7 @@
             }, error => {
                 document.getElementById('count').textContent = 'Catálogo indisponível';
                 document.getElementById('grid').innerHTML = '<div class="empty">Não foi possível carregar o catálogo agora. Tente novamente mais tarde.</div>';
-                console.error('Erro ao carregar catálogo público:', error);
+                console.error('Erro ao carregar catálogo público do Firebase:', error);
             });
         }
         load();
